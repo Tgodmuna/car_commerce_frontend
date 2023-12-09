@@ -6,7 +6,7 @@ import { FaPlaneArrival } from "react-icons/fa";
 import { IoLogoModelS } from "react-icons/io";
 import { RiLoginCircleLine } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
-import { useState } from "react";
+import { memo, useState } from "react";
 const Navbar = () => {
   let navigate: NavigateFunction = useNavigate();
   const [isVisible, setIsvisible] = useState<boolean>(false);
@@ -98,7 +98,7 @@ type isVisiblePropType = {
 };
 
 //mobile navMenu
-const MobileNavLink = ({ isVisible }: isVisiblePropType) => {
+const MobileNavLink = memo(({ isVisible }: isVisiblePropType) => {
   let navigate: NavigateFunction = useNavigate();
 
   return (
@@ -128,4 +128,4 @@ const MobileNavLink = ({ isVisible }: isVisiblePropType) => {
       </ul>
     </div>
   );
-};
+});
