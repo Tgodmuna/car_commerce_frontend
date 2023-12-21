@@ -1,7 +1,7 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { CartContext } from "../../App";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { cartContextType } from "../TypeStore";
+import { cartContextType, new_productStoreType } from "../TypeStore";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 
 type Props = {};
@@ -20,6 +20,9 @@ const CheckOut = (props: Props) => {
     cart.map((item): number => item.price) || [],
   );
 
+  const checkAllTotalPrice = (): number => {
+    return TotalQtyPrice.reduce((total, item) => total + item, 0);
+  };
   //a function that calculates the total price for each item based on its quantity:
   const calculateTotalPrice: (quantity: number, price: number) => number = (
     quantity: number,
@@ -126,7 +129,7 @@ const CheckOut = (props: Props) => {
                 price
               </p>
               <div className='text-neutral-800 text-xl font-semibold'>
-                {item.price}
+                {item.price.toLocaleString()}
               </div>
             </div>
             {/* total */}
@@ -135,7 +138,7 @@ const CheckOut = (props: Props) => {
                 total
               </p>
               <div className='text-neutral-800 text-xl font-semibold'>
-                {`$${TotalQtyPrice[itemIndex]}`}
+                {`$${TotalQtyPrice[itemIndex].toLocaleString()}`}
               </div>
             </div>
           </div>
@@ -146,32 +149,42 @@ const CheckOut = (props: Props) => {
 
   return (
     <div className='flex w-full mt-[1rem] gap-2 '>
-      <ul className='md:flex flex-col w-[83rem] p-4 max-h-[53rem] bg-white rounded-xl overflow-auto overflow-x-hidden'>
+      <ul className=' gap-2 md:flex flex-col w-full p-4 max-h-[53rem] bg-white rounded-xl overflow-auto overflow-x-hidden'>
+        <div className='flex justify-between items-center w-full'>
+          <h1 className='uppercase font-bold text-4xl text-neutral-600 '>
+            shopping cart
+          </h1>
+          <h3 className='text-3xl text-neutral-600 font-semibold'>
+            {cart.length}items
+          </h3>
+        </div>
+        <hr className='border-[2px] border-slate-500 mt-2 w-auto' />
         {cart.length !== 0 ? (
           eachItem
         ) : (
-          <div className=' w-[45rem uppercase m-auto text-[50px] animate-bounce text-red-950'>
+          <div className='  uppercase m-auto text-[50px] animate-bounce text-red-950'>
             <p className='flex items-center gap-2'>
               {" "}
               no item in cart
-              <MdOutlineRemoveShoppingCart size={70} />{" "}
+              <MdOutlineRemoveShoppingCart className='animate-ping' size={70} />
             </p>
             <p>add item and come back</p>
           </div>
         )}
       </ul>
       {/* order summary */}
-      <div className=' flex flex-col gap-[3rem] w-[40rem] h-[53rem] bg-slate-100 p-5  rounded-xl'>
+      {cart.length !== 0&&( <div className=' flex flex-col gap-[3rem] w-[40rem] h-[53rem] bg-slate-100 p-5  rounded-xl'>
         <h1 className='text-center capitalize text-4xl font-bold'>
           order summary
         </h1>
         <hr className='border-gray-600 border' />
         <div className='flex justify-between items-center w-full '>
           <p className='uppercase text-xl'>
-            total price <span>0</span>
+            total price $ <span>{checkAllTotalPrice().toLocaleString()}</span>
           </p>
           <p className='uppercase text-xl'>
-            total item <span>0</span>
+            total items:{" "}
+            <span className='font-bold text-xl'>{cart.length}</span>
           </p>
         </div>
         {/* location */}
@@ -211,7 +224,7 @@ const CheckOut = (props: Props) => {
           <input
             type='text'
             name='promo-code'
-            placeholder='cx-45jk'
+            placeholder=' enter promo code e.g:cx-45jk'
             className='p-4 w-full rounded-xl placeholder:text-center placeholder:uppercase'
           />
           <button
@@ -226,14 +239,15 @@ const CheckOut = (props: Props) => {
           <p className='uppercase text-3xl font-extrabold text-neutral-600'>
             total cost
           </p>
-          <p className='uppercase text-xl font-semibold'>$0</p>
+          <p className='uppercase text-xl font-semibold'>$</p>
         </div>
         <button
           type='submit'
           className='w-full h-[4rem] bg-blue-700 rounded-md uppercase text-white  text-2xl hover:bg-blue-500'>
           checkout
         </button>
-      </div>
+      </div>)}
+     
     </div>
   );
 };

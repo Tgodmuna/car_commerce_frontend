@@ -37,4 +37,3 @@
 .arrow {
   @apply bg-black text-sky-700 hover:text-sky-400  absolute text-[6rem] top-[20rem] rounded-xl hover:ring-white ring-1 hover:cursor-pointer;
 }
-
