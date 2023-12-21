@@ -1,19 +1,40 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-.mobileNavlinkStyle{
-    @apply uppercase hover:underline  flex gap-1 items-center  justify-center text-xl text-slate-200 font-serif  hover:cursor-pointer hover:text-gray-600
+.mobileNavlinkStyle {
+  @apply uppercase hover:underline  flex gap-1 items-center  justify-center text-xl text-slate-200 font-serif  hover:cursor-pointer hover:text-gray-600;
 }
 
 .InputlabelStyle {
   @apply relative  top-[-3rem] m-2 px-1 uppercase font-bold text-xl peer-focus:translate-y-[-2.7rem] md:peer-focus:translate-y-[-3rem] peer-invalid:text-red-600 peer-invalid:font-extrabold peer-invalid:before:content-['invalid_'] text-cyan-300 md:text-slate-200 transition-all;
 }
-.inputStyle{
-  @apply p-3 mt-[1rem]  rounded-lg focus:ring-4 focus:ring-cyan-300 md:w-[22vw]
-
+.inputStyle {
+  @apply p-3 mt-[1rem]  rounded-lg focus:ring-4 focus:ring-cyan-300 md:w-[22vw];
 }
-.animateTime{
+.animateTime {
   animation-duration: 150ms;
   animation-iteration-count: 1;
 }
+
+.time {
+  animation-duration: 150ms;
+  animation-iteration-count: 2;
+  
+}
+
+.BuyBtn_Animation {
+  @apply animate-spin time;
+}
+
+.bg:hover {
+  @apply BuyBtn_Animation transition-all;
+}
+
+.ViewCard_P {
+  @apply text-2xl text-black font-semibold uppercase m-auto;
+}
+.arrow {
+  @apply bg-black text-sky-700 hover:text-sky-400  absolute text-[6rem] top-[20rem] rounded-xl hover:ring-white ring-1 hover:cursor-pointer;
+}
+
