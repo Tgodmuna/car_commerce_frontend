@@ -4,7 +4,7 @@ import { FaChevronUp } from "react-icons/fa";
 import { CgDetailsMore, CgProfile } from "react-icons/cg";
 import { RiAiGenerate, RiLogoutCircleRLine } from "react-icons/ri";
 import { PiKeyReturnThin } from "react-icons/pi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   MdFormatListNumbered,
   MdManageHistory,
@@ -12,11 +12,18 @@ import {
 } from "react-icons/md";
 import { GrStatusUnknown } from "react-icons/gr";
 import { IoAnalytics } from "react-icons/io5";
+import Navbar from "../Navbar";
+import { CartContext } from "../../App";
 
 type Props = {};
 
 const DashBoard = (props: Props) => {
-  return <section className="w-full  " >DashBoard</section>;
+  return (
+    <section className='w-full flex'>
+      <Sidebar />
+      <Main />
+    </section>
+  );
 };
 
 export default DashBoard;
@@ -30,20 +37,12 @@ export const Sidebar = () => {
   };
   return (
     <section
-      className={`flex flex-col ex rounded-e-2xl pt-2 text-neutral-300 justify-between bg-gray-900 items-center  ${
-        Isexpanded
-          ? "w-[23rem] transition-all "
-          : "w-[5rem] transition-all "
+      className={`flex flex-col ex  text-neutral-300 justify-between bg-gray-900 items-center  ${
+        Isexpanded ? "w-[23rem] transition-all " : "w-[5rem] transition-all "
       } h-screen  border border-slate-100`}>
       {Isexpanded ? (
         <div className='flex items-center justify-between w-full h-[4rem] '>
-          <img
-            // onClick={() => navigate("/")}
-            src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg'
-            alt='logo_'
-            className='w-12 h-12 ml-1 shadow-lg hover:cursor-pointer hover:animate-bounce animateTime rounded-md object-contain'
-          />
-          <span className='text-2xl text-cyan-400'>Dashboard</span>
+          <span className='text-2xl ml-2 text-cyan-400'>Dashboard</span>
           <span>
             <IoMdArrowBack
               size={40}
@@ -54,12 +53,6 @@ export const Sidebar = () => {
         </div>
       ) : (
         <div className='flex flex-col items-center gap-3 w-full h-[4rem] transition-all duration-500'>
-          <img
-            // onClick={() => navigate("/")}
-            src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg'
-            alt='logo_'
-            className='w-12 h-12 ml shadow-lg hover:cursor-pointer hover:animate-bounce animateTime rounded-md object-contain'
-          />
           <span>
             <HiBars2
               size={40}
@@ -205,5 +198,18 @@ export const Sidebar = () => {
         )}
       </div>
     </section>
+  );
+};
+//main component
+
+export const Main = () => {
+  const cartContext = useContext(CartContext);
+  const checkLen: () => number | undefined = () => {
+    return cartContext?.cart.length;
+  };
+  return (
+    <main>
+      <Navbar cartQuantity={checkLen} />
+    </main>
   );
 };
