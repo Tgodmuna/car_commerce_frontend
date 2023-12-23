@@ -7,6 +7,7 @@ import { cartContextType, new_productStoreType } from "./components/TypeStore";
 import React, { useCallback, useState } from "react";
 import Cart from "./components/User/CheckOut";
 import CheckOut from "./components/User/CheckOut";
+import { Sidebar } from "./components/User/DashBoard";
 
 //cart context
 export const CartContext = React.createContext<undefined | cartContextType>(
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className='App'>
-      <CartContext.Provider value={CartStoreAndModification}>
+      {/* <CartContext.Provider value={CartStoreAndModification}>
         <Navbar cartQuantity={calculateQuan} />
         <Routes>
           <Route path='/' element={<Home />} />
@@ -41,7 +42,8 @@ function App() {
             }
           />
         </Routes>
-      </CartContext.Provider>
+      </CartContext.Provider> */}
+      <Sidebar/>
     </div>
   );
 }
