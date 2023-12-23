@@ -37,9 +37,9 @@ export const Sidebar = () => {
   };
   return (
     <section
-      className={`flex flex-col ex  text-neutral-300 justify-between bg-gray-900 items-center  ${
-        Isexpanded ? "w-[23rem] transition-all " : "w-[5rem] transition-all "
-      } h-screen  border border-slate-100`}>
+      className={`flex flex-col ex m-0 text-neutral-300 justify-between bg-gray-900 items-center  ${
+        Isexpanded ? "w-[20rem] transition-all " : "w-[5rem] transition-all "
+      } h-screen `}>
       {Isexpanded ? (
         <div className='flex items-center justify-between w-full h-[4rem] '>
           <span className='text-2xl ml-2 text-cyan-400'>Dashboard</span>
@@ -208,7 +208,7 @@ export const Main = () => {
     return cartContext?.cart.length;
   };
   return (
-    <main>
+    <main className="m-0 w-full">
       <Navbar cartQuantity={checkLen} />
     </main>
   );

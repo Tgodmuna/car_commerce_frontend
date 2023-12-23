@@ -8,18 +8,23 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
 import React, { memo, useEffect, useState } from "react";
 
-const Navbar: React.FC<{ cartQuantity: () => number }> = ({ cartQuantity }) => {
-  const [cartTotalLen, SetcartTotalLen] = useState(0);
+const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
+  cartQuantity,
+}) => {
+  const [cartTotalLen, SetcartTotalLen] = useState<number | undefined>(0);
+
   let navigate: NavigateFunction = useNavigate();
   const [isVisible, setIsvisible] = useState<boolean>(false);
   useEffect(() => SetcartTotalLen(cartQuantity), [cartQuantity]);
+
   //mobile view activator
   const activateMobileview = (): void => {
     setIsvisible(!isVisible);
   };
   return (
-    <nav className='flex gap-2 md:gap-0 bg-gray-900 md:space-x-4 justify-between py-2  z-10 mt-0 '>
-      <span className='flex gap-[1rem] items-center  md:justify-normal md:gap-[4rem] py-2 md:w-[25%] w-[85vw]'>
+    <nav className='  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 z-10 mt-0 w-full max-w-[100%]'>
+      {/* logo and search bar */}
+      <span className='flex gap-[1rem] items-center  md:justify-normal md:gap-[1rem] py-2 md:w-[26%] w-[85vw]'>
         <img
           onClick={() => navigate("/")}
           src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg'
@@ -35,13 +40,15 @@ const Navbar: React.FC<{ cartQuantity: () => number }> = ({ cartQuantity }) => {
         />
         <button
           type='submit'
-          className='md:block hidden text-white text-[22px] md:text-xl bg-red-500  md:w-[10rem] md:px-6 md:py-2 md:relative right-[3.5rem] p-1 rounded-lg  '>
+          className='md:block hidden text-white text-[22px] md:text-xl bg-red-500  md:w-[10rem] md:px-4 md:py-2 md:relative right-[3.5rem] p-1 rounded-lg  '>
           send
         </button>
         <span className='absolute md:hidden top-[24px] w-8 h-[32px]  left-[12.3rem] bg-slate-900 z-10'>
           <CiSearch className='text-cyan-300 text-3xl font-bold' />
         </span>
-        <span className='flex md:hidden items-center justify-center' onClick={()=>navigate('/CheckOut')}>
+        <span
+          className='flex md:hidden items-center justify-center'
+          onClick={() => navigate("/CheckOut")}>
           <FiShoppingCart className='bg-transparent text-2xl text-cyan-400' />
           <span className='counter w-4 h-4 text-center text-cyan-300 m-auto justify-center  relative -left-1 top-[-1rem] '>
             {cartTotalLen}
@@ -50,7 +57,7 @@ const Navbar: React.FC<{ cartQuantity: () => number }> = ({ cartQuantity }) => {
       </span>
 
       {/*large screen menue links */}
-      <ul className=' hidden md:flex justify-center gap-[13rem] items-center w-full p-5 '>
+      <ul className=' hidden md:flex justify-center gap-[7rem] w-[60rem] items-center p-5'>
         <li
           className='uppercase text-xl text-slate-200 font-serif hover:underline hover:cursor-pointer hover:text-gray-600 '
           onClick={() => {
@@ -74,7 +81,7 @@ const Navbar: React.FC<{ cartQuantity: () => number }> = ({ cartQuantity }) => {
       </span>
 
       {/* larger screen navbar icons */}
-      <ul className='md:flex hidden w-[35rem] gap-[6rem] items-center '>
+      <ul className='md:flex hidden w-auto gap-[3rem] items-center  '>
         <li className='text-[3rem] text-red-500 flex '>
           <FiShoppingCart
             className='hover:scale-75 hover:text-white hover:cursor-pointer'
