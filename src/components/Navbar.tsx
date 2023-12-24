@@ -8,16 +8,23 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
 import React, { memo, useEffect, useState } from "react";
 
-const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
-  cartQuantity,
-}) => {
+const Navbar: React.FC<{
+  cartQuantity: () => number | undefined;
+  paths: {
+    newProducts: "/new_arrival" | "/dashboard/new_arrival";
+    newModels: "";
+    latestModel: "";
+    cart: "/checkout" | "/dashboard/checkout";
+  };
+  IsLoggedIn: boolean;
+}> = ({ cartQuantity, paths, IsLoggedIn }) => {
   const [cartTotalLen, SetcartTotalLen] = useState<number | undefined>(0);
 
   let navigate: NavigateFunction = useNavigate();
   const [isVisible, setIsvisible] = useState<boolean>(false);
   useEffect(() => SetcartTotalLen(cartQuantity), [cartQuantity]);
 
-  //mobile view activator
+  //mobile view handler
   const activateMobileview = (): void => {
     setIsvisible(!isVisible);
   };
@@ -61,7 +68,7 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
         <li
           className='uppercase text-xl text-slate-200 font-serif hover:underline hover:cursor-pointer hover:text-gray-600 '
           onClick={() => {
-            navigate("/new_arrival");
+            navigate(paths.newProducts);
           }}>
           new arrival
         </li>
@@ -85,19 +92,22 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
         <li className='text-[3rem] text-red-500 flex '>
           <FiShoppingCart
             className='hover:scale-75 hover:text-white hover:cursor-pointer'
-            onClick={() => navigate("/CheckOut")}
+            onClick={() => navigate(paths.cart)}
           />
           <span className='counter w-4 h-4 text-center text-[20px] text-red-300 m-auto justify-center  relative -left-2 top-[-30px] '>
             {cartTotalLen}
           </span>
         </li>
-        <li>
-          <IoIosLogIn
-            className='text-[3rem] text-red-500 hover:scale-75 hover:text-white hover:cursor-pointer'
-            title='login'
-            onClick={() => navigate("/log-in")}
-          />
-        </li>
+        {/* if the user is loggedIn show not the loggin button or else */}
+        {!IsLoggedIn && (
+          <li>
+            <IoIosLogIn
+              className='text-[3rem] text-red-500 hover:scale-75 hover:text-white hover:cursor-pointer'
+              title='login'
+              onClick={() => navigate("/log-in")}
+            />
+          </li>
+        )}
       </ul>
       <MobileNavLink isVisible={isVisible} />
     </nav>

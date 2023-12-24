@@ -12,7 +12,16 @@ const Home = (props: Props) => {
 
   return (
     <div>
-      <Navbar cartQuantity={checkLen} />
+      <Navbar
+        cartQuantity={checkLen}
+        paths={{
+          newProducts: "/new_arrival",
+          newModels: "",
+          latestModel: "",
+          cart: "/checkout",
+        }}
+        IsLoggedIn={false}
+      />
     </div>
   );
 };

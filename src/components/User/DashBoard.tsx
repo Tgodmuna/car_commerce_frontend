@@ -14,6 +14,7 @@ import { GrStatusUnknown } from "react-icons/gr";
 import { IoAnalytics } from "react-icons/io5";
 import Navbar from "../Navbar";
 import { CartContext } from "../../App";
+import { Outlet } from "react-router-dom";
 
 type Props = {};
 
@@ -25,7 +26,6 @@ const DashBoard = (props: Props) => {
     </section>
   );
 };
-
 export default DashBoard;
 
 //sidebar component
@@ -200,16 +200,26 @@ export const Sidebar = () => {
     </section>
   );
 };
-//main component
 
+//main component
 export const Main = () => {
   const cartContext = useContext(CartContext);
   const checkLen: () => number | undefined = () => {
     return cartContext?.cart.length;
   };
   return (
-    <main className="m-0 w-full">
-      <Navbar cartQuantity={checkLen} />
+    <main className='m-0 w-full'>
+      <Navbar
+        cartQuantity={checkLen}
+        paths={{
+          newProducts: "/dashboard/new_arrival",
+          newModels: "",
+          latestModel: "",
+          cart: "/dashboard/checkout",
+        }}
+        IsLoggedIn={true}
+      />
+      <Outlet />
     </main>
   );
 };
