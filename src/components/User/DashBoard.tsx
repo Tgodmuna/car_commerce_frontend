@@ -37,7 +37,7 @@ export const Sidebar = () => {
   };
   return (
     <section
-      className={`flex flex-col ex m-0 text-neutral-300 justify-between bg-gray-900 items-center  ${
+      className={` hidden md:flex flex-col ex m-0 text-neutral-300 justify-between bg-gray-900 items-center  ${
         Isexpanded ? "w-[20rem] transition-all " : "w-[5rem] transition-all "
       } h-screen `}>
       {Isexpanded ? (
@@ -65,7 +65,7 @@ export const Sidebar = () => {
 
       {/* menus */}
       {Isexpanded ? (
-        <ul className='flex flex-col w-full gap-[2rem] justify-center items-center h-[35rem] p-2'>
+        <ul className='flex flex-col w-full mt-[5rem] gap-[4rem]   items-center h-full p-2'>
           <li className='sidebarMenue group z-10'>
             <div>
               <HiMiniShoppingCart size={40} className='text-cyan-400' />{" "}
@@ -120,7 +120,7 @@ export const Sidebar = () => {
           </li>
         </ul>
       ) : (
-        <ul className='flex flex-col w-full mt-[5rem] gap-[4rem] g  items-center h-full p-2'>
+        <ul className='flex flex-col w-full mt-[5rem] gap-[4rem]   items-center h-full p-2'>
           <li className=' group z-10'>
             <div className='flex justify-center items-center'>
               <HiMiniShoppingCart
@@ -181,10 +181,10 @@ export const Sidebar = () => {
       <div className='flex flex-col w-full h-auto justify-center items-center'>
         {Isexpanded ? (
           <button
-            className='flex items-center text-3xl uppercase hover:text-cyan-400 p-3 rounded-lg w-[12rem] bg-gray-950'
+            className='flex  items-center text-xl uppercase hover:text-cyan-400 p-3 rounded-lg w-[8rem] bg-slate-100 bg-opacity-10'
             type='button'>
             <span className='block'>
-              <RiLogoutCircleRLine size={40} className='' />
+              <RiLogoutCircleRLine size={30} className='' />
             </span>
             logout
           </button>

@@ -22,17 +22,17 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
     setIsvisible(!isVisible);
   };
   return (
-    <nav className='  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 z-10 mt-0 w-full max-w-[100%]'>
+    <nav className='  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 z-10 mt-0 w-auto max-w-[100%]'>
       {/* logo and search bar */}
-      <span className='flex gap-[1rem] items-center  md:justify-normal md:gap-[1rem] py-2 md:w-[26%] w-[85vw]'>
+      <span className='flex gap-[1rem] items-center  md:items-center md:justify-between  md:gap-[0.5rem] py-2 md:w-auto md:max-w-[20%] w-[85vw]'>
         <img
           onClick={() => navigate("/")}
           src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg'
           alt='logo_'
-          className='w-12 h-12 ms-1 md:ms-8 shadow-lg hover:cursor-pointer hover:animate-bounce animateTime rounded-md object-contain'
+          className='max-w-12 w-auto  h-12 ms-1  shadow-lg hover:cursor-pointer hover:animate-bounce animateTime rounded-md object-contain'
         />
         <input
-          className='h-[2rem] md:h-[2.5rem] md:w-[20rem] w-[10rem] rounded-lg focus:ring focus:ring-green-300 placeholder:text-center md:text-2xl '
+          className='h-[2rem] md:h-[2.5rem]  md:max-w-[15rem] w-auto rounded-lg focus:ring focus:ring-green-300 placeholder:text-center md:text-xl '
           type='text'
           placeholder='search car'
           name='search'
@@ -40,7 +40,7 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
         />
         <button
           type='submit'
-          className='md:block hidden text-white text-[22px] md:text-xl bg-red-500  md:w-[10rem] md:px-4 md:py-2 md:relative right-[3.5rem] p-1 rounded-lg  '>
+          className='md:block hidden text-white text-[22px] md:text-[15px] bg-red-500  md:w-[5rem] md:px-4 md:py-2 md:relative right-[3.5rem] p-1 rounded-lg  '>
           send
         </button>
         <span className='absolute md:hidden top-[24px] w-8 h-[32px]  left-[12.3rem] bg-slate-900 z-10'>
@@ -57,7 +57,7 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
       </span>
 
       {/*large screen menue links */}
-      <ul className=' hidden md:flex justify-center gap-[7rem] w-[60rem] items-center p-5'>
+      <ul className=' hidden md:flex justify-between flex-nowrap  w-[60rem] max-w-[60rem] items-center p-5'>
         <li
           className='uppercase text-xl text-slate-200 font-serif hover:underline hover:cursor-pointer hover:text-gray-600 '
           onClick={() => {
@@ -81,7 +81,7 @@ const Navbar: React.FC<{ cartQuantity: () => number | undefined }> = ({
       </span>
 
       {/* larger screen navbar icons */}
-      <ul className='md:flex hidden w-auto gap-[3rem] items-center  '>
+      <ul className='md:flex hidden w-[10rem] max-w-[15rem]  p-2  justify-between items-center  '>
         <li className='text-[3rem] text-red-500 flex '>
           <FiShoppingCart
             className='hover:scale-75 hover:text-white hover:cursor-pointer'
