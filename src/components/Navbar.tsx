@@ -15,6 +15,7 @@ const Navbar: React.FC<{
     newModels: "";
     latestModel: "";
     cart: "/checkout" | "/dashboard/checkout";
+    home:'/'|'/dashboard'
   };
   IsLoggedIn: boolean;
 }> = ({ cartQuantity, paths, IsLoggedIn }) => {
@@ -33,7 +34,7 @@ const Navbar: React.FC<{
       {/* logo and search bar */}
       <span className='flex gap-[1rem] items-center  md:items-center md:justify-between  md:gap-[0.5rem] py-2 md:w-auto md:max-w-[20%] w-[85vw]'>
         <img
-          onClick={() => navigate("/")}
+          onClick={() => navigate(paths.home)}
           src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg'
           alt='logo_'
           className='max-w-12 w-auto  h-12 ms-1  shadow-lg hover:cursor-pointer hover:animate-bounce animateTime rounded-md object-contain'

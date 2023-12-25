@@ -71,5 +71,5 @@ ul{
 @apply w-[4rem] p-1 hover:bg-cyan-100 hover:shadow-xl shadow-cyan-200 hover:scale-150 transition-all duration-700 hover:text-black rounded-md
 }
 .ex{
-  transition: width 300ms ;
+  transition: width 1 ;
 }

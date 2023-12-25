@@ -37,7 +37,7 @@ export const Sidebar = () => {
   };
   return (
     <section
-      className={` hidden md:flex flex-col ex m-0 text-neutral-300 justify-between bg-gray-900 items-center  ${
+      className={` hidden  md:flex flex-col ex m-0 text-neutral-300 justify-between bg-gray-900 items-center  ${
         Isexpanded ? "w-[20rem] transition-all " : "w-[5rem] transition-all "
       } h-screen `}>
       {Isexpanded ? (
@@ -216,6 +216,7 @@ export const Main = () => {
           newModels: "",
           latestModel: "",
           cart: "/dashboard/checkout",
+          home:'/dashboard'
         }}
         IsLoggedIn={true}
       />

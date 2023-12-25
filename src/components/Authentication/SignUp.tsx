@@ -36,7 +36,7 @@ const SignUp = (props: Props) => {
   const HandleSubmit: () => void = () => {
     const Data: formType = Formstate;
     axios
-      .post("hkn", Data)
+      .post("https://car-backend-23tq.onrender.com/register", Data)
       .then((successRes) => {
         setMessage({
           ...message,
@@ -46,6 +46,8 @@ const SignUp = (props: Props) => {
             successStatusCode: successRes.status,
           },
         });
+        console.log('successRes', successRes);
+        console.log(message);
       })
       .catch((err) => {
         if (err.response)
@@ -57,6 +59,7 @@ const SignUp = (props: Props) => {
               errorStatusCode: err.response.status,
             },
           }));
+        console.log(err);
       });
   };
 
@@ -68,14 +71,17 @@ const SignUp = (props: Props) => {
     const label = document.getElementsByTagName("label")[
       index
     ] as HTMLLabelElement;
-    console.log(input, label);
     input.value !== ""
       ? (label.style.visibility = "hidden")
       : (label.style.visibility = "visible");
   };
 
   return (
-    <div className='bg-gray-950 p-3 w-full lg:w-[60vw] h-screen md:h-[50vh] m-auto md:my-[5rem]'>
+    <form
+      onSubmit={(e) => {
+        HandleSubmit();
+      }}
+      className='bg-gray-950 p-3 w-full lg:w-[60vw] h-screen md:h-[50vh] m-auto md:my-[5rem]'>
       {/* first */}
       <div className=' flex flex-wrap md:flex-nowrap bg-transparent w-full md:w-full m-auto md:mt-[2rem] h-auto divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
         <div className=' p-2 flex-col flex items-center justify-center w-full h-full m-auto'>
@@ -141,10 +147,6 @@ const SignUp = (props: Props) => {
       {/* third */}
       <div className='flex md:flex-row flex-col items-center justify-center gap-[1.3rem] w-full md:border-2 md:border-x-transparent md:border-b-transparent border-cyan-500 md:pt-4'>
         <button
-          onSubmit={(e) => {
-            e.preventDefault();
-            HandleSubmit();
-          }}
           className=' hover:ring-2 shadow-md hover:shadow-slate-200 ring-slate-900 rounded-lg p-2 w-[7rem] bg-white text-xl uppercase hover:bg-cyan-500 hover:text-white'
           type='submit'>
           Submit
@@ -169,7 +171,7 @@ const SignUp = (props: Props) => {
           </label>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
