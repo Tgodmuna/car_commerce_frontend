@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import { CartContext } from "../App";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
+import AllProducts from "./AllProducts";
 
 type Props = {};
 
@@ -26,6 +27,7 @@ const Home = (props: Props) => {
         IsLoggedIn={false}
       />
       <HeroBanner />
+      <AllProducts />
     </div>
   );
 };
@@ -117,17 +119,17 @@ const HeroBanner = () => {
               {index === currentSlide && (
                 <div className='absolute right-0 top-72 mr-12 transform -translate-y-1/2 p-4 text-white'>
                   <div>
-                    <p className='font-bold text-3xl text-white'>
+                    <p className='font-bold text-9xl text-white'>
                       Explore to our related product
                     </p>
                     <div>
-                      <h1 className='font-semibold text-2xl text-white'>
+                      <h1 className='font-semibold text-5xl text-neutral-600'>
                         Shop the best product for your home
                       </h1>
                     </div>
                     <button
                       type='button'
-                      className='bg-indigo-500 text-white p-2 rounded-full mt-4 hover:bg-black-500'>
+                      className='bg-indigo-500 text-white text-xl w-[10rem] h-[4rem] rounded-lg p-3'>
                       Explore Product
                     </button>
                   </div>
@@ -197,7 +199,6 @@ function TopCategory() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <section className='bg-gray-200 py-8 mt-4  w-full'>

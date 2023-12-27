@@ -1,7 +1,7 @@
 import { memo, useCallback, useContext, useMemo, useState } from "react";
 import { CartContext } from "../../App";
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { cartContextType, new_productStoreType } from "../TypeStore";
+import { cartContextType } from "../TypeStore";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 
 type Props = {};
@@ -12,9 +12,8 @@ const CheckOut = (props: Props) => {
 
   //this is a counter that tracks each item's quantity
   const [QuantityCounter, setQuantityCounter] = useState<number[]>(
-    cart.map((item): number => item.qty) || [],
-  );
-
+    cart.map((item): number => item.quantity) || [],
+  )
   //holds the total item's quantity price after calculation
   const [TotalQtyPrice, setTotalQtyPrice] = useState<number[]>(
     cart.map((item): number => item.price) || [],
@@ -70,7 +69,7 @@ const CheckOut = (props: Props) => {
 
           <div className='w-[14vw] justify-between h-[10rem]  flex flex-row p-2'>
             <img
-              src={item.image}
+              src={item.Image}
               alt={`item${itemIndex}_image`}
               className=' w-full object-contain '
             />

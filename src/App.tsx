@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import SignUp from "./components/Authentication/SignUp";
 import NewProduct from "./components/NewProduct";
-import { cartContextType, new_productStoreType } from "./components/TypeStore";
+import { ProductsType, cartContextType } from "./components/TypeStore";
 import React, {  useState } from "react";
 import CheckOut from "./components/User/CheckOut";
 import DashBoard from "./components/User/DashBoard";
@@ -14,7 +14,7 @@ export const CartContext = React.createContext<undefined | cartContextType>(
 
 function App() {
   //cart store
-  const [cartStore, setcartStore] = useState<new_productStoreType[]>([]);
+  const [cartStore, setcartStore] = useState<ProductsType[]>([]);
 
   const CartStoreAndModification = {
     cart: cartStore,

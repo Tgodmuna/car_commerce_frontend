@@ -1,179 +1,89 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
-import { new_productStoreType, viewCardPropType } from "./TypeStore";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { ProductsType, viewCardPropType } from "./TypeStore";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import axios from "axios";
 
 type NewproductProps = {
-  cart: new_productStoreType[];
-  setcartStore: React.Dispatch<React.SetStateAction<new_productStoreType[]>>;
+  cart: ProductsType[];
+  setcartStore: React.Dispatch<React.SetStateAction<ProductsType[]>>;
 };
 
 const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
-  //id generator
-  const idGEn = () => {
-    return Math.floor(Math.random() * 900) + 100;
-  };
   //API store
-  const Store: new_productStoreType[] = useMemo(
-    () => [
-      {
-        model: "Toyota Camry",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 35000,
-        image: "/NewArrivalCarImage/car2.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "3.7%",
-      },
-      {
-        model: "Honda Accord",
-        id: idGEn(),
-        qty: 1,
-        year: 2023,
-        price: 38000,
-        image: "/NewArrivalCarImage/car3.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "3.7%",
-      },
-      {
-        model: "Ford Mustang",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 45000,
-        image: "/NewArrivalCarImage/car4.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "3.7%",
-      },
-      {
-        model: "Chevrolet Malibu",
-        id: idGEn(),
-        qty: 1,
-        year: 2021,
-        price: 32000,
-        image: "/NewArrivalCarImage/car5.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "3.8%",
-      },
-      {
-        model: "Nissan Altima",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 36000,
-        image: "/NewArrivalCarImage/car6.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "3.7%",
-      },
-      {
-        model: "bugatti Veron",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 36000,
-        image: "/NewArrivalCarImage/car10.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "5.7%",
-      },
-      {
-        model: "bugatti Veron",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 36000,
-        image: "/NewArrivalCarImage/car9.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐🌟",
-        percentage_rating: "3.7%",
-      },
-      {
-        model: "bugatti Veron",
-        id: idGEn(),
-        qty: 1,
-        year: 2022,
-        price: 36000,
-        image: "/NewArrivalCarImage/car8.jpg",
-        description:
-          "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt reprehender" +
-          "it voluptates itaque perferendis placeat nisi quia odio rem recusandae perspic" +
-          "iatis velit sint, dolorum illo excepturi commodi quod eius laboriosam aperiam.",
-        rating: "⭐⭐⭐⭐🌟",
-        percentage_rating: "4.7%",
-      },
-    ],
-    [],
-  );
-
+  const [Store, setStore] = useState<ProductsType[] | []>([]);
+  const [IsLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setisError] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState("");
   const [isBuy, setIsBuy] = useState<boolean[]>(
     Array(Store.length).fill(false),
   );
   const [ShowSelected, setShowSelected] = useState<boolean>(false);
-  const [Selected, setSelected] = useState<undefined | new_productStoreType>(
-    undefined,
-  );
+  const [Selected, setSelected] = useState<undefined | ProductsType>(undefined);
 
-  //buy icon handler
-  const handleBuy: (index: number) => void = (index) => {
-    //spin the icon
-    const icon: NodeListOf<Element> = document.querySelectorAll(".plus");
-    const selectedItem = Store.find((_item, itemindex) => itemindex === index);
-    if (selectedItem) {
-      if (!cart.includes(selectedItem)) {
-        icon[index].classList.add("BuyBtn_Animation");
-        setTimeout(() => {
-          icon[index].classList.remove("BuyBtn_Animation");
-          // show marked in some seconds
-          setIsBuy((prev) => {
-            prev[index] = true;
-            return [...prev];
-          });
-        }, 1000);
+  //on componentMount, request for API
+  useEffect(() => {
+    // set loading TRUE
+    setIsLoading(true);
+    setisError(false);
 
-        //show back the plus icon
-        setTimeout(() => {
-          setIsBuy((prev) => {
-            prev[index] = false;
-            return [...prev];
-          });
-        }, 3000);
-        setcartStore((prevSTate) => [...prevSTate, selectedItem]);
-      } else {
-        alert("already in the cart");
-        setIsBuy(Array(Store.length).fill(false));
+    axios
+      .get("https://car-backend-23tq.onrender.com/newcars")
+      .then((ReturnedData) => {
+        if (ReturnedData.data) setIsLoading(false);
+        setStore(ReturnedData.data);
+        return ReturnedData;
+      })
+      .catch((err) => {
+        seterrorMessage(err.meassage);
+        setIsLoading(false);
+        setisError(true);
+      });
+  }, []);
+
+  //buy handler
+  const memoizedHandleBuy = useMemo(() => {
+    const handleBuy: (index: number) => void = (index) => {
+      //spin the icon
+      const icon: NodeListOf<Element> = document.querySelectorAll(".plus");
+
+      //return an element where indices are same
+      const selectedItem = Store.find(
+        (_item, itemindex) => itemindex === index,
+      );
+      if (selectedItem) {
+        // add BuyBtn_Animation class if the selected item is not in the cart
+        if (!cart.includes(selectedItem)) {
+          icon[index].classList.add("BuyBtn_Animation");
+          setTimeout(() => {
+            icon[index].classList.remove("BuyBtn_Animation");
+            // show marked in some seconds
+            setIsBuy((prev) => {
+              prev[index] = true;
+              return [...prev];
+            });
+          }, 1000);
+
+          //show back the plus icon
+          setTimeout(() => {
+            setIsBuy((prev) => {
+              prev[index] = false;
+              return [...prev];
+            });
+          }, 3000);
+          setcartStore((prevSTate) => [...prevSTate, selectedItem]);
+        } else {
+          alert("already in the cart");
+          setIsBuy(Array(Store.length).fill(false));
+        }
       }
-    }
-  };
-  //  handler to manage viewing cards
+    };
+    return handleBuy;
+  }, [Store, cart, setcartStore]);
+
+  //  handler to manage viewing eachItem
   const Choose = useCallback(
     (index: number) => (index: number) => {
       if (Store.length > 0) {
@@ -184,13 +94,14 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
     [Store],
   );
 
-  const cards = useMemo(
+  const eachItem = useMemo(
     () =>
       Store.map((item, index) => {
         return (
           <li
             key={index}
-            className=' cards group p-2 m-3 h-auto md:w-[20rem] rounded flex flex-col hover:transition-all duration-500 hover:scale-95 hover:shadow-slate-700 shadow-md '>
+            className=' card group p-2 m-3 h-auto md:w-[19.9rem] rounded flex flex-col hover:transition-all duration-500 hover:scale-95 hover:shadow-slate-700 shadow-md '>
+            {/* detail button */}
             <button
               type='button'
               onClick={() => {
@@ -198,13 +109,16 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
                 setShowSelected(true);
               }}
               className='hidden text-xl font-bold  p-3 w-[6rem] m-auto group-hover:ring-1 ring-sky-400 uppercase group-hover:block rounded-lg relative '>
-              about
+              Details
             </button>
+            {/* product image */}
             <img
-              src={item.image}
+              src={`https://car-backend-23tq.onrender.com/newcars${item.Image}`}
               alt={`car ${index}`}
               className=' md:w-[20rem] shadow-md shadow-gray-600 md:h-[20rem] object-contain rounded-md m-auto my-2 p-1 '
             />
+
+            {/* model,description,rating,percentage rating and buy button container */}
             <div className='Details flex flex-col w-full h-[auto] gap-1 bg-white'>
               <p className='font-semibold text-2xl text-neutral-800'>
                 {item.model}
@@ -218,8 +132,8 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
               </span>
 
               <div className='price flex justify-between items-center w-full'>
-                <p className='text-black font-bold font-sans text-3xl'>
-                  ${item.price}
+                <p className='text-neutral-600 font-bold font-sans text-xl'>
+                  ${item.price.toLocaleString()}
                 </p>
                 <p
                   id={`btn${index}`}
@@ -234,7 +148,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
                   />
                 ) : (
                   <BsFillPlusCircleFill
-                    onClick={() => handleBuy(index)}
+                    onClick={() => memoizedHandleBuy(index)}
                     className={` plus text-[2.3rem] hover:cursor-pointer text-yellow-600 -ml-9 `}
                   />
                 )}
@@ -243,7 +157,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
           </li>
         );
       }),
-    [Choose, Store, isBuy],
+    [Choose, Store, isBuy, memoizedHandleBuy],
   );
   //toggle Off view component
   const Toggle = useCallback(() => {
@@ -254,7 +168,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
       {ShowSelected ? (
         <ViewCard Selected={Selected} close={Toggle} />
       ) : (
-        <div className='flex flex-col '>
+        <div className='flex flex-col  justify-center items-center'>
           <div className='flex justify-between items-center w-full md:bg-inherit bg-slate-950 px-6 my-2 p-4 md:p-0 md:my-5 '>
             <h1 className='uppercase md:text-neutral-900 font-bold text-xl text-white md:text-5xl'>
               new arrival
@@ -265,7 +179,19 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
               View all
             </button>
           </div>
-          <div className='flex flex-wrap gap-2'>{cards}</div>
+          <div className='flex flex-wrap gap-2 items-center justify-center'>
+            {IsLoading ? (
+              <h1 className='text-9xl text-red-300'>Loading</h1>
+            ) : (
+              <ul className='flex flex-wrap  max-w-[100vw] w m-auto justify-center items-center'>
+                {isError ? (
+                  <h1 className='text-red-600 text-3xl'>{errorMessage}</h1>
+                ) : (
+                  eachItem
+                )}
+              </ul>
+            )}
+          </div>
         </div>
       )}
     </>
@@ -289,9 +215,9 @@ export const ViewCard = memo(({ Selected, close }: viewCardPropType) => {
       </div>
 
       {/* product image */}
-      <a className=' mt-4' href={Selected?.image}>
+      <a className=' mt-4' href={Selected?.Image}>
         <img
-          src={Selected?.image}
+          src={Selected?.Image}
           alt='img'
           className=' w-[50%] h-[50rem] object-cover shadow-md m-auto hover:cursor-pointer'
         />

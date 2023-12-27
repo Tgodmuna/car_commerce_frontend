@@ -35,11 +35,26 @@ export type new_productStoreType = {
 };
 
 export type viewCardPropType = {
-  Selected: new_productStoreType | undefined;
+  Selected: ProductsType | undefined;
   close: () => void;
 };
 
 export type cartContextType = {
-  cart: new_productStoreType[];
-  cartModifier: React.Dispatch<React.SetStateAction<new_productStoreType[]>>;
+  cart: ProductsType[];
+  cartModifier: React.Dispatch<React.SetStateAction<ProductsType[]>>;
+};
+
+export type ProductsType = {
+  id: number;
+  model: number;
+  name: string;
+  description: string;
+  Image: string;
+  images: string[];
+  rating: number;
+  percentage_rating: number;
+  price: number;
+  year: number;
+  quantity: number;
+  availability: boolean;
 };
