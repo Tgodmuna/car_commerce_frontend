@@ -20,24 +20,8 @@ import AllProducts from "../AllProducts";
 type Props = {};
 
 const DashBoard = (props: Props) => {
-   const cartContext = useContext(CartContext);
-   const checkLen: () => number | undefined = () => {
-     return cartContext?.cart.length;
-   };
   return (
-    <section className='w-full'>
-      <Navbar
-        cartQuantity={checkLen}
-        paths={{
-          newProducts: "/dashboard/new_arrival",
-          newModels: "",
-          latestModel: "",
-          cart: "/dashboard/checkout",
-          home: "/dashboard",
-        }}
-        IsLoggedIn={true}
-        width={100}
-      />
+    <section className='w-full flex'>
       <Sidebar />
       <Main />
     </section>
@@ -54,7 +38,7 @@ export const Sidebar = () => {
   };
   return (
     <section
-      className={` hidden fixed  z-20  md:flex flex-col ex  text-neutral-300 justify-between bg-gray-950 items-center  ${
+      className={` hidden  z-20  md:flex flex-col ex text-neutral-300 justify-between bg-gray-950 items-center  ${
         Isexpanded
           ? "w-[20rem] transition-all ease-in "
           : "w-[5rem] transition-all ease-out "
@@ -222,10 +206,28 @@ export const Sidebar = () => {
 
 //main component
 export const Main = () => {
+  const cartContext = useContext(CartContext);
+  const checkLen: () => number | undefined = () => {
+    return cartContext?.cart.length;
+  };
+  const [IsOutlet, setIsOutlet] = useState(false);
+  const handleOutlet = () => setIsOutlet(true);
   return (
-    <main className='m-0 w-full'>
-      <AllProducts />
-      <Outlet />
+    <main className='m-0 w-full max-w-[100%] max-h-[100vh] overflow-scroll overflow-x-hidden'>
+      <Navbar
+        cartQuantity={checkLen}
+        paths={{
+          newProducts: "/dashboard/new_arrival",
+          newModels: "",
+          latestModel: "",
+          cart: "/dashboard/checkout",
+          home: "/dashboard",
+        }}
+        IsLoggedIn={true}
+        width={100}
+        handleOutlet={handleOutlet}
+      />
+      {IsOutlet ? <Outlet /> : <AllProducts />}
     </main>
   );
 };

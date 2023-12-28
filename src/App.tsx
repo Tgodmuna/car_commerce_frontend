@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import CheckOut from "./components/User/CheckOut";
 import DashBoard from "./components/User/DashBoard";
 import ErrorBoundary from "./components/ErroBundry";
+import AllProducts from "./components/AllProducts";
 
 //cart context
 export const CartContext = React.createContext<undefined | cartContextType>(
@@ -36,8 +37,9 @@ function App() {
               }
             />
             <Route path='/dashboard' element={<DashBoard />}>
-              <Route path='checkout' element={<CheckOut />} />
+              <Route path='checkout' index={true} element={<CheckOut />} />
               <Route
+                index={true}
                 path='new_arrival'
                 element={
                   <NewProduct cart={cartStore} setcartStore={setcartStore} />

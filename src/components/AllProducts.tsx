@@ -109,7 +109,7 @@ const AllProducts = (props: Props) => {
         return (
           <li
             key={itemIndex}
-            className=' cards group p-2 m-3 h-auto md:w-[20rem] rounded flex flex-col hover:transition-all duration-500 hover:scale-95 hover:shadow-slate-700 shadow-md '>
+            className=' cards group p-2 m-3 h-auto md:w-[19rem] rounded flex flex-col hover:transition-all duration-500 hover:scale-95 hover:shadow-slate-700 shadow-md '>
             <button
               type='button'
               onClick={() => {
@@ -170,14 +170,15 @@ const AllProducts = (props: Props) => {
       {ShowSelected ? (
         <ViewCard Selected={Selected} close={Toggle} />
       ) : (
-        <div className='flex flex-col  gap-3 '>
-          <ul className='w-full flex flex-wrap justify-center items-center'>
+        <div className='flex flex-col  gap-3 w-full '>
+          <ul className='w-full gap-x-[3rem] gap-y-[3rem] flex flex-wrap justify-center items-center'>
             {IsLoading ? (
-              <div className='bg-yellow  w-[10rem] h-[10rem], p-4 animate-spin m-0 rounded-full bg-red-400 border-[10px] border-dotted'></div>
+              <div className='bg-yellow  w-[5rem] h-[5rem], p-4 animate-spin m-0 rounded-full bg-red-400 border-[10px] border-dotted'></div>
             ) : (
               EachProduct
             )}
-          </ul>
+            </ul>
+            {/* render if error */}
           <p className='text-[50px] text-red-500 text-center'>
             {isError &&
               `${errorMessage}, failed to load products

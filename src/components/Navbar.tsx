@@ -15,11 +15,12 @@ const Navbar: React.FC<{
     newModels: "";
     latestModel: "";
     cart: "/checkout" | "/dashboard/checkout";
-    home:'/'|'/dashboard'
+    home: "/" | "/dashboard";
   };
   IsLoggedIn: boolean;
   width?: number;
-}> = ({ cartQuantity, paths, IsLoggedIn,width }) => {
+  handleOutlet?: () => void;
+}> = ({ cartQuantity, paths, IsLoggedIn, width, handleOutlet }) => {
   const [cartTotalLen, SetcartTotalLen] = useState<number | undefined>(0);
 
   let navigate: NavigateFunction = useNavigate();
@@ -31,7 +32,8 @@ const Navbar: React.FC<{
     setIsvisible(!isVisible);
   };
   return (
-    <nav className={` sticky z-20 top-0  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 mt-0 w-auto md:w-[${width}vw]`}>
+    <nav
+      className={` z-20 top-0  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 mt-0 w-auto md:w-[${width}vw]`}>
       {/* logo and search bar */}
       <span className='flex gap-[1rem] items-center  md:items-center md:justify-between  md:gap-[0.5rem] py-2 md:w-auto md:max-w-[20%] w-[85vw]'>
         <img
@@ -95,7 +97,10 @@ const Navbar: React.FC<{
         <li className='text-[3rem] text-red-500 flex '>
           <FiShoppingCart
             className='hover:scale-75 hover:text-white hover:cursor-pointer'
-            onClick={() => navigate(paths.cart)}
+            onClick={() => {
+              if (handleOutlet) handleOutlet();
+              navigate(paths.cart);
+            }}
           />
           <span className='counter w-4 h-4 text-center text-[20px] text-red-300 m-auto justify-center  relative -left-2 top-[-30px] '>
             {cartTotalLen}

@@ -95,7 +95,7 @@ const HeroBanner = () => {
   };
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8 bg-black'>
       <div className='w-full h-full flex overflow-hidden relative'>
         <AiOutlineLeft
           onClick={prevSlide}
@@ -162,7 +162,7 @@ const HeroBanner = () => {
       <h1 className='text-6xl text-center w-full text-neutral-600 font-bold'>
         Featured Products
       </h1>
-      <div className='featured bg-cyan-100 products border-[3px] py-7 mb-[4rem] rounded-lg border-cyan-100 flex justify-around'>
+      <div className='featured bg-black opacity-30 products border-[3px] py-7 mb-[4rem] rounded-lg border-cyan-100 flex justify-around'>
         <img
           src='FeaturedImages/INKAS.png'
           alt='featured product1'
