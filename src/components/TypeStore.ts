@@ -22,17 +22,6 @@ export type messageType = {
   };
 };
 
-export type new_productStoreType = {
-  model: string;
-  year: number;
-  price: number;
-  image: string;
-  description: string;
-  rating: string;
-  percentage_rating: string;
-  id: number;
-  qty: number;
-};
 
 export type viewCardPropType = {
   Selected: ProductsType | undefined;

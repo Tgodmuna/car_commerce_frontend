@@ -55,6 +55,7 @@ const Navbar: React.FC<{
         <span className='absolute md:hidden top-[24px] w-8 h-[32px]  left-[12.3rem] bg-slate-900 z-10'>
           <CiSearch className='text-cyan-300 text-3xl font-bold' />
         </span>
+
         <span
           className='flex md:hidden items-center justify-center'
           onClick={() => navigate("/CheckOut")}>
@@ -106,7 +107,7 @@ const Navbar: React.FC<{
             <IoIosLogIn
               className='text-[3rem] text-red-500 hover:scale-75 hover:text-white hover:cursor-pointer'
               title='login'
-              onClick={() => navigate("/log-in")}
+              onClick={() => navigate("/sign-up")}
             />
           </li>
         )}

@@ -1,10 +1,13 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { formType, messageType } from "../TypeStore";
 import axios from "axios";
+import { IoCheckmarkDoneSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const SignUp = (props: Props) => {
+  const navigate = useNavigate();
   const [Formstate, setFormstate] = useState<formType>({
     fullName: "",
     Email: "",
@@ -31,7 +34,6 @@ const SignUp = (props: Props) => {
       [inputName]: inputValue,
     }));
   };
-
   //submit handler
   const HandleSubmit: () => void = () => {
     const Data: formType = Formstate;
@@ -42,12 +44,14 @@ const SignUp = (props: Props) => {
           ...message,
           success: {
             ...message.success,
-            successMessage: successRes.statusText,
+            successMessage: successRes.data.message,
             successStatusCode: successRes.status,
           },
         });
-        console.log('successRes', successRes);
-        console.log(message);
+        if (successRes.status)
+          setTimeout(() => {
+            navigate("/signIn");
+          }, 3000);
       })
       .catch((err) => {
         if (err.response)
@@ -80,10 +84,14 @@ const SignUp = (props: Props) => {
     <form
       onSubmit={(e) => {
         HandleSubmit();
+        e.preventDefault();
       }}
-      className='bg-gray-950 p-3 w-full lg:w-[60vw] h-screen md:h-[50vh] m-auto md:my-[5rem]'>
+      className='bg-gray-950 p-3 w-full lg:w-[80vw] h-screen  m-auto md:my-[1rem]'>
+      {/* message */}
+      <Notification message={message} />
+      
       {/* first */}
-      <div className=' flex flex-wrap md:flex-nowrap bg-transparent w-full md:w-full m-auto md:mt-[2rem] h-auto divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
+      <div className=' flex flex-wrap md:flex-nowrap  w-full md:w-full h-[20rem] m-auto md:mt-[2rem]  divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
         <div className=' p-2 flex-col flex items-center justify-center w-full h-full m-auto'>
           <input
             className='inputStyle peer'
@@ -92,7 +100,7 @@ const SignUp = (props: Props) => {
             id='fullName'
             onChange={(e) => handleInputs(e)}
             value={Formstate.fullName}
-            onBlur={() => hidelabel(0)}
+            onInput={() => hidelabel(0)}
           />
           <label htmlFor='fullName' className='InputlabelStyle'>
             fullName
@@ -106,15 +114,15 @@ const SignUp = (props: Props) => {
             id='email'
             onChange={(e) => handleInputs(e)}
             value={Formstate.Email}
-            onBlur={() => hidelabel(1)}
+            onInput={() => hidelabel(1)}
           />
-          <label htmlFor='email' className='InputlabelStyle'>
+          <label htmlFor='email' className='InputlabelStyle '>
             email
           </label>
         </div>
       </div>
       {/* second */}
-      <div className=' z-13 flex flex-wrap md:flex-nowrap bg-transparent w-full md:w-full m-auto h-auto divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
+      <div className=' z-13 flex flex-wrap md:flex-nowrap bg-transparent w-full md:w-full m-auto h-[20rem] divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
         <div className=' p-2 flex-col flex items-center justify-center w-full h-full m-auto'>
           <input
             className='inputStyle peer'
@@ -123,9 +131,9 @@ const SignUp = (props: Props) => {
             id='userName'
             onChange={(e) => handleInputs(e)}
             value={Formstate.userName}
-            onBlur={() => hidelabel(2)}
+            onInput={() => hidelabel(2)}
           />
-          <label htmlFor='userName' className='InputlabelStyle'>
+          <label htmlFor='userName' className='InputlabelStyle '>
             userName
           </label>
         </div>
@@ -137,9 +145,9 @@ const SignUp = (props: Props) => {
             id='pasw'
             onChange={(e) => handleInputs(e)}
             value={Formstate.password}
-            onBlur={() => hidelabel(3)}
+            onInput={() => hidelabel(3)}
           />
-          <label htmlFor='pasw' className='InputlabelStyle'>
+          <label htmlFor='pasw' className='InputlabelStyle '>
             password
           </label>
         </div>
@@ -147,6 +155,7 @@ const SignUp = (props: Props) => {
       {/* third */}
       <div className='flex md:flex-row flex-col items-center justify-center gap-[1.3rem] w-full md:border-2 md:border-x-transparent md:border-b-transparent border-cyan-500 md:pt-4'>
         <button
+          // onSubmit={HandleSubmit}
           className=' hover:ring-2 shadow-md hover:shadow-slate-200 ring-slate-900 rounded-lg p-2 w-[7rem] bg-white text-xl uppercase hover:bg-cyan-500 hover:text-white'
           type='submit'>
           Submit
@@ -176,3 +185,26 @@ const SignUp = (props: Props) => {
 };
 
 export default SignUp;
+
+//toast notication
+type NotificationProp = {
+  message: messageType;
+};
+const Notification = ({ message }: Partial<NotificationProp>) => {
+  const [IsSuccessful, setIsSuccessful] = useState<undefined | number>(
+    undefined,
+  );
+  useEffect(
+    () => setIsSuccessful(message?.success.successStatusCode),
+    [message?.success.successStatusCode],
+  );
+  return (
+    <div
+      className={` animate-pulse  w-[25rem] m-auto ${
+        IsSuccessful !== undefined ? "flex" : "hidden"
+      }  justify-center items-center gap-2 p-3 rounded-xl border-[3px] transform transition-all border-green-500  bg-black opacity-0  text-neutral-200 text-xl text-center `}>
+      <p>{message?.success.successMessage}</p>
+      <IoCheckmarkDoneSharp className='text-green-500 text-3xl' />
+    </div>
+  );
+};

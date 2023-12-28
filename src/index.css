@@ -15,7 +15,7 @@ ul{
 }
 
 .InputlabelStyle {
-  @apply relative  top-[-3rem] m-2 px-1 uppercase font-bold text-xl peer-focus:translate-y-[-2.7rem] md:peer-focus:translate-y-[-3rem] peer-invalid:text-red-600 peer-invalid:font-extrabold peer-invalid:before:content-['invalid_'] text-cyan-300 md:text-slate-200 transition-all;
+  @apply relative  top-[-3rem] m-2 px-1 uppercase font-bold text-xl text-cyan-700 peer-focus:translate-y-[-2.7rem] md:peer-focus:translate-y-[-3rem] peer-invalid:text-red-600 peer-invalid:font-extrabold peer-invalid:before:content-['invalid_']  md:text-cyan-500 md:font-thin transition-all;
 }
 .inputStyle {
   @apply p-3 mt-[1rem]  rounded-lg focus:ring-4 focus:ring-cyan-300 md:w-[22vw];

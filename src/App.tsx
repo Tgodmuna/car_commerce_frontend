@@ -28,7 +28,7 @@ function App() {
         <CartContext.Provider value={CartStoreAndModification}>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/log-in' element={<SignUp />} />
+            <Route path='/sign-up' element={<SignUp />} />
             <Route
               path='/new_arrival'
               element={
