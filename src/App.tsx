@@ -3,9 +3,10 @@ import Home from "./components/Home";
 import SignUp from "./components/Authentication/SignUp";
 import NewProduct from "./components/NewProduct";
 import { ProductsType, cartContextType } from "./components/TypeStore";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import CheckOut from "./components/User/CheckOut";
 import DashBoard from "./components/User/DashBoard";
+import ErrorBoundary from "./components/ErroBundry";
 
 //cart context
 export const CartContext = React.createContext<undefined | cartContextType>(
@@ -22,29 +23,31 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <CartContext.Provider value={CartStoreAndModification}>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/log-in' element={<SignUp />} />
-          <Route
-            path='/new_arrival'
-            element={
-              <NewProduct cart={cartStore} setcartStore={setcartStore} />
-            }
-          />
-          <Route path='/dashboard' element={<DashBoard />}>
-            <Route path='checkout' element={<CheckOut />} />
+    <ErrorBoundary>
+      <div className='App'>
+        <CartContext.Provider value={CartStoreAndModification}>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/log-in' element={<SignUp />} />
             <Route
-              path='new_arrival'
+              path='/new_arrival'
               element={
                 <NewProduct cart={cartStore} setcartStore={setcartStore} />
               }
             />
-          </Route>
-        </Routes>
-      </CartContext.Provider>
-    </div>
+            <Route path='/dashboard' element={<DashBoard />}>
+              <Route path='checkout' element={<CheckOut />} />
+              <Route
+                path='new_arrival'
+                element={
+                  <NewProduct cart={cartStore} setcartStore={setcartStore} />
+                }
+              />
+            </Route>
+          </Routes>
+        </CartContext.Provider>
+      </div>
+    </ErrorBoundary>
   );
 }
 

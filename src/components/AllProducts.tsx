@@ -171,32 +171,9 @@ const AllProducts = (props: Props) => {
         <ViewCard Selected={Selected} close={Toggle} />
       ) : (
         <div className='flex flex-col  gap-3 '>
-          <h1 className='text-5xl text-left w-full text-neutral-600 font-bold'>
-            Featured Products
-          </h1>
-          <div className='featured products border-[3px] py-7 rounded-lg border-cyan-100 flex justify-around'>
-            <img
-              src='FeaturedImages/INKAS.png'
-              alt='featured product1'
-              className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
-            />
-            <img
-              src='FeaturedImages/STREIT.jpeg'
-              alt='featured product2'
-              className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
-            />
-            <img
-              src='FeaturedImages/TAG.jpeg'
-              alt='featured product3'
-              className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
-            />
-          </div>
-
           <ul className='w-full flex flex-wrap justify-center items-center'>
             {IsLoading ? (
-              <div className='bg-yellow w-6, h-6, p-4 animate-spin m-0 rounded-full'>
-                <div className='border-[3px] w-4 h-4 rounded-full border-cyan'></div>
-              </div>
+              <div className='bg-yellow  w-[10rem] h-[10rem], p-4 animate-spin m-0 rounded-full bg-red-400 border-[10px] border-dotted'></div>
             ) : (
               EachProduct
             )}

@@ -18,7 +18,8 @@ const Navbar: React.FC<{
     home:'/'|'/dashboard'
   };
   IsLoggedIn: boolean;
-}> = ({ cartQuantity, paths, IsLoggedIn }) => {
+  width?: number;
+}> = ({ cartQuantity, paths, IsLoggedIn,width }) => {
   const [cartTotalLen, SetcartTotalLen] = useState<number | undefined>(0);
 
   let navigate: NavigateFunction = useNavigate();
@@ -30,7 +31,7 @@ const Navbar: React.FC<{
     setIsvisible(!isVisible);
   };
   return (
-    <nav className='  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 z-10 mt-0 w-auto max-w-[100%]'>
+    <nav className={` sticky z-20 top-0  flex gap-2 md:gap-0 bg-gray-900 items-center justify-between py-2 md:px-2 mt-0 w-auto md:w-[${width}vw]`}>
       {/* logo and search bar */}
       <span className='flex gap-[1rem] items-center  md:items-center md:justify-between  md:gap-[0.5rem] py-2 md:w-auto md:max-w-[20%] w-[85vw]'>
         <img

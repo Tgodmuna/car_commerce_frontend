@@ -157,8 +157,28 @@ const HeroBanner = () => {
           className='absolute right-0 text-3xl inset-y-1/2 text-white cursor-pointer'
         />
       </div>
-
       <TopCategory />
+
+      <h1 className='text-6xl text-center w-full text-neutral-600 font-bold'>
+        Featured Products
+      </h1>
+      <div className='featured bg-cyan-100 products border-[3px] py-7 mb-[4rem] rounded-lg border-cyan-100 flex justify-around'>
+        <img
+          src='FeaturedImages/INKAS.png'
+          alt='featured product1'
+          className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
+        />
+        <img
+          src='FeaturedImages/STREIT.jpeg'
+          alt='featured product2'
+          className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
+        />
+        <img
+          src='FeaturedImages/TAG.jpeg'
+          alt='featured product3'
+          className='w-[20rem] h-[20rem] rounded-md bg-slate-200'
+        />
+      </div>
     </div>
   );
 };

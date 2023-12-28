@@ -181,7 +181,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
           </div>
           <div className='flex flex-wrap gap-2 items-center justify-center'>
             {IsLoading ? (
-              <h1 className='text-9xl text-red-300'>Loading</h1>
+              <div className='bg-yellow  w-[10rem], h-[10rem],  animate-spin m-0 rounded-full bg-red-400 border-[10px] border-dotted'></div>
             ) : (
               <ul className='flex flex-wrap  max-w-[100vw] w m-auto justify-center items-center'>
                 {isError ? (
@@ -201,12 +201,12 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
 // view card component
 export const ViewCard = memo(({ Selected, close }: viewCardPropType) => {
   return (
-    <div className='flex flex-col bg-gray-600 w-full'>
+    <div className='flex bg-opacity-50 absolute z-40 left-[40rem]  flex-col bg-black w-[70rem] max-w-full '>
       {/* close button */}
-      <div className='absolute left-[120rem] top-[6rem]'>
+      <div className='relative left-[120rem] top-[6rem]'>
         <IoMdClose
           className='hover:cursor-pointer bg'
-          color='white'
+          color='black'
           size={50}
           onClick={() => {
             close();
