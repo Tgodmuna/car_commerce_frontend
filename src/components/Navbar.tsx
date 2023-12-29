@@ -112,7 +112,7 @@ const Navbar: React.FC<{
             <IoIosLogIn
               className='text-[3rem] text-red-500 hover:scale-75 hover:text-white hover:cursor-pointer'
               title='login'
-              onClick={() => navigate("/sign-up")}
+              onClick={() => navigate("/sign-in")}
             />
           </li>
         )}

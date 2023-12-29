@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { formType, messageType } from "../TypeStore";
 import axios from "axios";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 type Props = {};
 
 const SignUp = (props: Props) => {
+  const [isloading, SetisLoading] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
   const [Formstate, setFormstate] = useState<formType>({
     fullName: "",
@@ -36,6 +38,7 @@ const SignUp = (props: Props) => {
   };
   //submit handler
   const HandleSubmit: () => void = () => {
+    SetisLoading(true);
     const Data: formType = Formstate;
     axios
       .post("https://car-backend-23tq.onrender.com/register", Data)
@@ -53,13 +56,14 @@ const SignUp = (props: Props) => {
           const serializedData = JSON.stringify(token);
           localStorage.setItem("userToken", serializedData);
         }
-        if (successRes.status === 200)
-          setTimeout(() => {
-            navigate("/sign-in");
-          }, 3000);
+        if (successRes.status === 200) SetisLoading(false);
+        setTimeout(() => {
+          navigate("/sign-in");
+        }, 2000);
         console.log(successRes);
       })
       .catch((err) => {
+        SetisLoading(false);
         if (err.response)
           setMessage((prevstate) => ({
             ...prevstate,
@@ -161,10 +165,17 @@ const SignUp = (props: Props) => {
       {/* third */}
       <div className='flex md:flex-row flex-col items-center justify-center gap-[1.3rem] w-full md:border-2 md:border-x-transparent md:border-b-transparent border-cyan-500 md:pt-4'>
         <button
-          // onSubmit={HandleSubmit}
-          className=' hover:ring-2 shadow-md hover:shadow-slate-200 ring-slate-900 rounded-lg p-2 w-[7rem] bg-white text-xl uppercase hover:bg-cyan-500 hover:text-white'
+          ref={buttonRef}
+          className={`mt-4 ${
+            isloading ? "cursor-not-allowed" : "pointer"
+          } bg-cyan-500 text-white text-xl flex item-center justify-center p-3 w-[10rem] rounded-md hover:bg-cyan-700 transition duration-300`}
           type='submit'>
-          Submit
+          {isloading ? (
+            <span
+              className={`h-4 w-4 p-4   rounded-full border-[5px] border-cyan-500 border-b-black animate-spin`}></span>
+          ) : (
+            "Submit"
+          )}
         </button>
 
         <div className=''>

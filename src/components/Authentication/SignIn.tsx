@@ -1,7 +1,7 @@
 // ... (import statements remain unchanged)
 
 import axios from "axios";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { formType } from "../TypeStore";
 
@@ -13,6 +13,8 @@ const SignUp = () => {
     checked: false,
   });
   const [Message, setMessage] = useState<string | null>(null);
+  const [isloading, SetisLoading] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // form handler
   const handleInputs: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
@@ -25,35 +27,43 @@ const SignUp = () => {
   };
   //submit handler
   const HandleSubmit: () => void = () => {
+    SetisLoading(true);
     const Data: formType = Formstate;
     const Token = localStorage.getItem("userToken");
     const parsedData = Token && JSON.parse(Token);
     axios.defaults.headers.common["Authorization"] = `Bearer ${parsedData}`;
-    axios
-      .postForm("https://car-backend-23tq.onrender.com/signin", Data)
-      .then((resp) => {
-        console.log(resp);
-        if (resp.status) navigate("/dashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-        setMessage(err.message);
-      });
+    validateForm() &&
+      axios
+        .postForm("https://car-backend-23tq.onrender.com/login", Data)
+        .then((resp) => {
+          SetisLoading(false);
+          console.log(resp);
+          if (resp.status) navigate("/dashboard");
+        })
+        .catch((err) => {
+          SetisLoading(false);
+          console.log(err);
+          setMessage(err.message);
+        });
   };
 
-  
-  //hideLabel
-  // const hidelabel: (index: number) => void = (index) => {
-  //   const input = document.getElementsByTagName("input")[
-  //     index
-  //   ] as HTMLInputElement;
-  //   const label = document.getElementsByTagName("label")[
-  //     index
-  //   ] as HTMLLabelElement;
-  //   input.value !== ""
-  //     ? (label.style.visibility = "hidden")
-  //     : (label.style.visibility = "visible");
-  // };
+  const validateForm: () => boolean = useCallback(() => {
+    if (Formstate.Email?.includes("@") && Formstate.password !== "") {
+      buttonRef.current!.style.cursor = "pointer";
+      return true;
+    }
+    buttonRef.current!.style.cursor = "not-allowed";
+    buttonRef.current!.disabled = true;
+    return false;
+  }, [Formstate.Email, Formstate.password]);
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.disabled = isloading;
+    }
+    validateForm();
+  }, [isloading, validateForm]);
+
   return (
     <form
       onSubmit={(e) => {
@@ -92,15 +102,23 @@ const SignUp = () => {
             value={Formstate.password}
           />
         </div>
-        <p className={`  text-red-500 ${Message ? "block" : "hidden"}`}>
+        <p className={`   text-red-500 ${Message ? "block" : "hidden"}`}>
           {Message}
         </p>
 
         {/* Submit Button */}
         <button
-          className='mt-4 bg-cyan-500 text-white p-2 rounded-md hover:bg-cyan-700 transition duration-300'
+          ref={buttonRef}
+          className={`mt-4 ${
+            isloading ? "cursor-not-allowed" : "pointer"
+          } bg-cyan-500 text-white text-xl flex item-center justify-center p-3 w-[10rem] rounded-md hover:bg-cyan-700 transition duration-300`}
           type='submit'>
-          Submit
+          {isloading ? (
+            <span
+              className={`h-4 w-4 p-4   rounded-full border-[5px] border-cyan-500 border-b-black animate-spin`}></span>
+          ) : (
+            "Submit"
+          )}
         </button>
         {/* Additional Options */}
         <div className='mt-4  m-0  text-center flex flex-col gap-2 justify-center items-center'>
@@ -122,7 +140,7 @@ const SignUp = () => {
           <p className='text-cyan-400 capitalize p-2 '>
             no account..?
             <span className=' text-cyan-500 text-xl ml-2 capitalize'>
-              <Link to={"/sign-in"}>Sign up</Link>
+              <Link to={"/sign-up"}>Sign up</Link>
             </span>
           </p>
         </div>
