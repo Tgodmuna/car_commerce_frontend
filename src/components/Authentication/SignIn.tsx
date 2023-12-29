@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useState, ChangeEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { formType, messageType } from "../TypeStore";
+import { formType } from "../TypeStore";
 
 const SignUp = () => {
   const navigate = useNavigate();
