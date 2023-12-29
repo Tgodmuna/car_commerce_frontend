@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import CheckOut from "./components/User/CheckOut";
 import DashBoard from "./components/User/DashBoard";
 import ErrorBoundary from "./components/ErroBundry";
-import AllProducts from "./components/AllProducts";
+import SignIn from "./components/Authentication/SignIn";
 
 //cart context
 export const CartContext = React.createContext<undefined | cartContextType>(
@@ -30,6 +30,8 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/sign-up' element={<SignUp />} />
+            <Route path='/sign-in' element={<SignIn/>} />
+
             <Route
               path='/new_arrival'
               element={

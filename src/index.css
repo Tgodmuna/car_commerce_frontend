@@ -73,3 +73,12 @@ ul{
 .ex{
   transition: width 1 ;
 }
+.signin{
+  @apply  w-full flex  p-4 items-center justify-center
+}
+.signin label{
+  @apply text-white text-center  text-xl  w-[15rem] 
+}
+form>div{
+  
+}

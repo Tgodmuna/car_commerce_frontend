@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { formType, messageType } from "../TypeStore";
 import axios from "axios";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -48,10 +48,16 @@ const SignUp = (props: Props) => {
             successStatusCode: successRes.status,
           },
         });
-        if (successRes.status)
+        if (successRes.status === 200) {
+          const token = successRes.data.token;
+          const serializedData = JSON.stringify(token);
+          localStorage.setItem("userToken", serializedData);
+        }
+        if (successRes.status === 200)
           setTimeout(() => {
-            navigate("/signIn");
+            navigate("/sign-in");
           }, 3000);
+        console.log(successRes);
       })
       .catch((err) => {
         if (err.response)
@@ -89,7 +95,7 @@ const SignUp = (props: Props) => {
       className='bg-gray-950 p-3 w-full lg:w-[80vw] h-screen  m-auto md:my-[1rem]'>
       {/* message */}
       <Notification message={message} />
-      
+
       {/* first */}
       <div className=' flex flex-wrap md:flex-nowrap  w-full md:w-full h-[20rem] m-auto md:mt-[2rem]  divide-y-2 md:divide-y-0 md:divide-x-2 divide-x-0 divide-cyan-500'>
         <div className=' p-2 flex-col flex items-center justify-center w-full h-full m-auto'>
@@ -162,22 +168,12 @@ const SignUp = (props: Props) => {
         </button>
 
         <div className=''>
-          {" "}
-          <p className='text-xl text-cyan-300 capitalize'>
-            <a href='klkk'>forget password..?</a>
+          <p className='text-cyan-300 text-center text-xl capitalize'>
+            already have an account?{" "}
+            <span className='text-cyan-400 text-xl ml-2'>
+              <Link to={"sign-in"}>Sign in</Link>
+            </span>
           </p>
-          <input
-            type='checkbox'
-            name='checkbox'
-            id='chk'
-            onChange={(e) => handleInputs(e)}
-            className='form-checkbox h-[17px] w-[20px] transition duration-1000 ease-in-out'
-          />
-          <label
-            htmlFor='chk'
-            className='text-cyan-300 text-center text-xl capitalize'>
-            remember me
-          </label>
         </div>
       </div>
     </form>

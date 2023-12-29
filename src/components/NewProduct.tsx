@@ -1,10 +1,10 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
-import { ProductsType, viewCardPropType } from "./TypeStore";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ProductsType } from "./TypeStore";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
-import { IoMdClose } from "react-icons/io";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+
 import axios from "axios";
+import ProductCard from "./ProductCard";
 
 type NewproductProps = {
   cart: ProductsType[];
@@ -85,7 +85,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
 
   //  handler to manage viewing eachItem
   const Choose = useCallback(
-    (index: number) => (index: number) => {
+    (index: number) => {
       if (Store.length > 0) {
         const select = Store.find((item, i) => index === i);
         if (select) setSelected(select);
@@ -166,7 +166,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
   return (
     <>
       {ShowSelected ? (
-        <ViewCard Selected={Selected} close={Toggle} />
+        <ProductCard Selected={Selected} close={Toggle} />
       ) : (
         <div className='flex flex-col  justify-center items-center'>
           <div className='flex justify-between items-center w-full md:bg-inherit bg-slate-950 px-6 my-2 p-4 md:p-0 md:my-5 '>
@@ -197,70 +197,4 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
     </>
   );
 };
-
-// view card component
-export const ViewCard = memo(({ Selected, close }: viewCardPropType) => {
-  return (
-    <div className='flex bg-opacity-50 absolute z-40 left-[40rem]  flex-col bg-black w-[70rem] max-w-full '>
-      {/* close button */}
-      <div className='relative left-[120rem] top-[6rem]'>
-        <IoMdClose
-          className='hover:cursor-pointer bg'
-          color='black'
-          size={50}
-          onClick={() => {
-            close();
-          }}
-        />
-      </div>
-
-      {/* product image */}
-      <a className=' mt-4' href={Selected?.Image}>
-        <img
-          src={Selected?.Image}
-          alt='img'
-          className=' w-[50%] h-[50rem] object-cover shadow-md m-auto hover:cursor-pointer'
-        />
-        <FaAngleRight className='arrow right-[25rem] ' />
-        <FaAngleLeft className='arrow left-[25rem]' />
-      </a>
-      {/* details */}
-      <div className='flex flex-col w-[50%] m-auto mb-4'>
-        <h1 className='font-bold text-4xl text-neutral-500 uppercase text-center'>
-          Description and Rating
-        </h1>
-        <p className='ViewCard_P'>
-          model: id:idGEn(), qty:0,
-          <span className='text-slate-400 text-xl '>
-            {Selected?.model}
-          </span>{" "}
-        </p>
-        <p className='ViewCard_P'>
-          engine type:
-          <span className='text-slate-400 text-xl '>{"TBA"}</span>
-        </p>
-        <p className='ViewCard_P'>
-          year:<span className='text-slate-400 text-xl '>{Selected?.year}</span>
-        </p>
-        <p className='ViewCard_P'>
-          Brand:<span className='text-slate-400 text-xl '>{"TBA"}</span>
-        </p>
-        <p className='ViewCard_P flex'>
-          rating:
-          <span className='text-slate-400 text-xl flex '>
-            {Selected?.rating}
-            {Selected?.percentage_rating}
-          </span>
-        </p>
-        <p className='ViewCard_P flex flex-col text-center'>
-          Description:
-          <span className='text-slate-400 text-xl  w-[30rem] capitalize '>
-            {Selected?.description}
-          </span>
-        </p>
-      </div>
-    </div>
-  );
-});
-
 export default React.memo(NewProduct);

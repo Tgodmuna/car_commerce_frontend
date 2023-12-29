@@ -10,7 +10,7 @@ import axios from "axios";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 import { CartContext } from "../App";
-import { ViewCard } from "./NewProduct";
+import ProductCard from "./ProductCard";
 
 type Props = {};
 
@@ -168,7 +168,7 @@ const AllProducts = (props: Props) => {
   return (
     <>
       {ShowSelected ? (
-        <ViewCard Selected={Selected} close={Toggle} />
+        <ProductCard Selected={Selected} close={Toggle} />
       ) : (
         <div className='flex flex-col  gap-3 w-full '>
           <ul className='w-full gap-x-[3rem] gap-y-[3rem] flex flex-wrap justify-center items-center'>
@@ -177,8 +177,8 @@ const AllProducts = (props: Props) => {
             ) : (
               EachProduct
             )}
-            </ul>
-            {/* render if error */}
+          </ul>
+          {/* render if error */}
           <p className='text-[50px] text-red-500 text-center'>
             {isError &&
               `${errorMessage}, failed to load products

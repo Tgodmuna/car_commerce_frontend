@@ -23,7 +23,7 @@ export type messageType = {
 };
 
 
-export type viewCardPropType = {
+export type productCardPropType = {
   Selected: ProductsType | undefined;
   close: () => void;
 };
