@@ -41,6 +41,7 @@ const SignUp = () => {
       });
   };
 
+  
   //hideLabel
   // const hidelabel: (index: number) => void = (index) => {
   //   const input = document.getElementsByTagName("input")[
