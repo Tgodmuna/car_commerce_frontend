@@ -37,7 +37,7 @@ export type ProductsType = {
   id: number;
   model: number;
   name: string;
-  description: string;
+  details: string;
   Image: string;
   images: string[];
   rating: number;

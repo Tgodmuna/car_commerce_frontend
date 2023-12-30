@@ -41,6 +41,7 @@ const AllProducts = (props: Props) => {
       .then((ReturnData) => {
         setIsLoading(false);
         setAllproducts(ReturnData.data);
+        console.log(ReturnData.data);
       })
       .catch((err) => {
         seterrorMessage(err.message);
@@ -130,7 +131,7 @@ const AllProducts = (props: Props) => {
                 {item.model}
               </p>
               <h4 className='description w-[15rem] text-xl font-semibold overflow-hidden whitespace-nowrap overflow-ellipsis  text-neutral-900'>
-                {item.description}
+                {item.details}
               </h4>
               <span className='rating flex '>
                 {item.rating}

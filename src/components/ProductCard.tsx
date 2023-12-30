@@ -96,8 +96,8 @@ const ProductCard = ({ Selected, close }: productCardPropType) => {
               {" "}
               limited life time warranty
             </Link>
-            <p className='w-full whitespace-pre-wrap text-start text-neutral-500 bg-black'>
-              {Selected?.description}
+            <p className='w-[18rem] whites whitespace-pre-wrap text-start text-neutral-700 bg-yellow p-2'>
+              {Selected?.details}
             </p>
             <p
               className={` max-w-[10rem] uppercase font-bold ${
@@ -166,8 +166,12 @@ const ProductCard = ({ Selected, close }: productCardPropType) => {
           </div>
         </div>
       </div>
+
       {/* second child */}
-      <div className=''></div>
+      <div className='flex gap-3 items-center'>
+        <div className="product_spec "></div>
+        <div></div>
+      </div>
       <div className=' flex gap-[2rem]'></div>
     </section>
   );
