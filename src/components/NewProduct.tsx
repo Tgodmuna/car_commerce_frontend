@@ -83,11 +83,11 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
     return handleBuy;
   }, [Store, cart, setcartStore]);
 
-  //  handler to manage viewing eachItem
+  //  handler to manage viewing each product 
   const Choose = useCallback(
     (index: number) => {
       if (Store.length > 0) {
-        const select = Store.find((item, i) => index === i);
+        const select = Store.find((_item, i) => index === i);
         if (select) setSelected(select);
       }
     },

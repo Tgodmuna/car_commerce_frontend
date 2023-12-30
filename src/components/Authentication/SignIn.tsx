@@ -110,7 +110,7 @@ const SignUp = () => {
         <button
           ref={buttonRef}
           className={`mt-4 ${
-            isloading ? "cursor-not-allowed" : "pointer"
+            isloading ? "cursor-not-allowed opacity-10 " : "pointer"
           } bg-cyan-500 text-white text-xl flex item-center justify-center p-3 w-[10rem] rounded-md hover:bg-cyan-700 transition duration-300`}
           type='submit'>
           {isloading ? (

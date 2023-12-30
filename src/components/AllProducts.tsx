@@ -18,7 +18,6 @@ const AllProducts = (props: Props) => {
   const [Allproducts, setAllproducts] = useState<ProductsType[] | []>([]);
   const [isBuy, setIsBuy] = useState<boolean[]>([]);
   const [ShowSelected, setShowSelected] = useState<boolean>(false);
-  //loading indicator
   const [IsLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setisError] = useState<boolean>(false);
   const [errorMessage, seterrorMessage] = useState("");
@@ -52,7 +51,7 @@ const AllProducts = (props: Props) => {
 
   //  handler to manage viewing cards
   const Choose = useCallback(
-    (index: number) => (index: number) => {
+    (index: number) => {
       if (Allproducts.length > 0) {
         const select = Allproducts.find((item, i) => index === i);
         if (select) setSelected(select);
@@ -66,7 +65,7 @@ const AllProducts = (props: Props) => {
     setShowSelected(false);
   }, []);
 
-  //buy icon handler
+  //buy handler
   const memoizedBuy = useMemo(() => {
     const handleBuy: (index: number) => void = (index) => {
       //spin the icon
@@ -103,6 +102,7 @@ const AllProducts = (props: Props) => {
     return handleBuy;
   }, [Allproducts, CART]);
 
+  //each product
   const EachProduct = useMemo(() => {
     if (AllProducts.length !== 0) {
       return Allproducts.map((item: ProductsType, itemIndex: number) => {
