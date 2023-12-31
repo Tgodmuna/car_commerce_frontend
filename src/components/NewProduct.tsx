@@ -113,7 +113,7 @@ const NewProduct = ({ cart, setcartStore }: NewproductProps) => {
             </button>
             {/* product image */}
             <img
-              src={`https://car-backend-23tq.onrender.com/allcars${item.Image}`}
+              src={`https://car-backend-23tq.onrender.com/newcars${item.Image}`}
               alt={`car ${index}`}
               className=' md:w-[20rem] shadow-md shadow-gray-600 md:h-[20rem] object-contain rounded-md m-auto my-2 p-1 '
             />
