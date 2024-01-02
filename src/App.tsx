@@ -18,6 +18,7 @@ export const CartContext = React.createContext<undefined | cartContextType>(
 function App() {
   //cart store
   const [cartStore, setcartStore] = useState<ProductsType[]>([]);
+  const [IsloggedIN, setIsloggedIN] = useState(false);
 
   const CartStoreAndModification = {
     cart: cartStore,
@@ -39,15 +40,16 @@ function App() {
                 <NewProduct cart={cartStore} setcartStore={setcartStore} />
               }
             />
+            <Route path='/checkout' index={true} element={<CheckOut />} />
+
             <Route path='/dashboard' element={<DashBoard />}>
               <Route path='checkout' index={true} element={<CheckOut />} />
-              <Route path='all_product\*' element={<AllProducts />} />
               <Route
-                index={true}
-                path='new_arrival'
                 element={
                   <NewProduct cart={cartStore} setcartStore={setcartStore} />
                 }
+                index={true}
+                path='new_arrival'
               />
             </Route>
           </Routes>

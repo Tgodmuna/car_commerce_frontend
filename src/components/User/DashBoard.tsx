@@ -4,7 +4,8 @@ import { FaChevronUp } from "react-icons/fa";
 import { CgDetailsMore, CgProfile } from "react-icons/cg";
 import { RiAiGenerate, RiLogoutCircleRLine } from "react-icons/ri";
 import { PiKeyReturnThin } from "react-icons/pi";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   MdFormatListNumbered,
   MdManageHistory,
@@ -206,12 +207,27 @@ export const Sidebar = () => {
 
 //main component
 export const Main = () => {
+  const location = useLocation();
+  const [isOutletVisible, setIsOutletVisible] = useState(true);
   const cartContext = useContext(CartContext);
+
+  useEffect(() => {
+    // Check the current location and update the visibility of Outlet accordingly
+    if (
+      location.pathname.includes("/dashboard/checkout") ||
+      location.pathname.includes("/dashboard/new_arrival") ||
+      location.pathname === "/"
+    ) {
+      setIsOutletVisible(true);
+    } else {
+      setIsOutletVisible(false);
+    }
+  }, [location.pathname]);
+
   const checkLen: () => number | undefined = () => {
     return cartContext?.cart.length;
   };
-  const [IsOutlet, setIsOutlet] = useState(false);
-  const handleOutlet = () => setIsOutlet(true);
+
   return (
     <main className='m-0 w-full max-w-[100%] max-h-[100vh] overflow-scroll overflow-x-hidden'>
       <Navbar
@@ -225,9 +241,8 @@ export const Main = () => {
         }}
         IsLoggedIn={true}
         width={100}
-        handleOutlet={handleOutlet}
       />
-      {IsOutlet ? <Outlet /> : <AllProducts />}
+      {isOutletVisible ? <Outlet /> : <AllProducts />}
     </main>
   );
 };

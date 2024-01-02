@@ -3,10 +3,16 @@ import { CartContext } from "../../App";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { cartContextType } from "../TypeStore";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { useLocation } from "react-router-dom";
+
 
 type Props = {};
 
 const CheckOut = (props: Props) => {
+   const location = useLocation();
+
+   console.log(location);
+
   const CART = useContext(CartContext);
   const { cart, cartModifier } = CART as cartContextType;
 
